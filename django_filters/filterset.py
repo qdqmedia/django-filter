@@ -274,9 +274,10 @@ class BaseFilterSet(object):
             self.strict = strict
 
         self.filters = copy.deepcopy(self.base_filters)
-        # propagate the model being used through the filters
+        # propagate the model and queryset being used through the filters
         for filter_ in self.filters.values():
             filter_.model = self._meta.model
+            filter_.queryset = self.queryset
 
         # Apply the parent to the filters, this will allow the filters to access the filterset
         for filter_key, filter_ in six.iteritems(self.filters):
